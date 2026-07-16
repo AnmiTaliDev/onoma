@@ -1,0 +1,66 @@
+---
+import { useTranslations } from '../i18n';
+import ThemeToggle from './ThemeToggle.astro';
+
+const t = useTranslations();
+const path = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a href="/" class="wordmark">{t('nav.home')}</a>
+    <div class="bar-right">
+      <nav aria-label={t('nav.browse')}>
+        <a href="/names/" aria-current={path.startsWith('/names') ? 'page' : undefined}>
+          {t('nav.browse')}
+        </a>
+      </nav>
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-block: var(--space-3);
+  }
+
+  .wordmark {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 560;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .bar-right {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+  }
+
+  nav {
+    display: flex;
+    gap: var(--space-4);
+  }
+
+  nav a {
+    color: var(--ink-muted);
+    text-decoration: none;
+    font-size: var(--step--1);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  nav a:hover,
+  nav a[aria-current='page'] {
+    color: var(--ink);
+  }
+</style>

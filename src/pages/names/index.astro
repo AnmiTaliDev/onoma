@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GenderMark from '../../components/GenderMark.astro';
+import { genderMeta } from '../../lib/gender';
+import { useTranslations } from '../../i18n';
+
+const t = useTranslations();
+const names = (await getCollection('names')).sort((a, b) => a.data.name.localeCompare(b.data.name));
+const genders = Object.keys(genderMeta) as Array<keyof typeof genderMeta>;
+---
+
+<BaseLayout title={t('browse.title')} description="Browse every name in Onoma, alphabetically.">
+  <h1>{t('browse.title')}</h1>
+  <p class="count">{t('browse.count', { count: names.length })}</p>
+
+  <ul class="legend" aria-label={t('legend.title')}>
+    {
+      genders.map((g) => (
+        <li>
+          <GenderMark gender={g} />
+        </li>
+      ))
+    }
+  </ul>
+
+  <ol class="entries">
+    {
+      names.map((entry) => (
+        <li>
+          <a href={`/names/${entry.id}/`}>
+            <span class="entry-name">{entry.data.name}</span>
+            <span class="entry-origin">{entry.data.origin}</span>
+            <GenderMark gender={entry.data.gender} />
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</BaseLayout>
+
+<style>
+  .count {
+    color: var(--ink-muted);
+    font-size: var(--step--1);
+  }
+
+  .legend {
+    display: flex;
+    gap: var(--space-4);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-3) 0 var(--space-5);
+    border-block: 1px solid var(--border);
+    padding-block: var(--space-2);
+  }
+
+  .entries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .entries li {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .entries a {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-2);
+    margin-inline: calc(var(--space-2) * -1);
+    text-decoration: none;
+  }
+
+  .entries a:hover {
+    background: var(--paper-alt);
+  }
+
+  .entry-name {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    color: var(--ink);
+  }
+
+  .entry-origin {
+    color: var(--ink-muted);
+    font-size: var(--step--1);
+  }
+</style>

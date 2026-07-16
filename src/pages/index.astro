@@ -1,0 +1,116 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GenderMark from '../components/GenderMark.astro';
+import { useTranslations } from '../i18n';
+
+const t = useTranslations();
+const names = (await getCollection('names')).sort((a, b) => a.data.name.localeCompare(b.data.name));
+---
+
+<BaseLayout
+  title={t('site.tagline')}
+  description="Onoma is a reference for given names: their origins, meanings, and the etymological and cultural threads that connect them."
+>
+  <section class="lead">
+    <h1>{t('site.title')}</h1>
+    <p class="tagline">{t('site.tagline')}</p>
+    <p class="prose">{t('home.lead')}</p>
+    <div class="actions">
+      <a href="/names/" class="button">{t('home.browseAll')}</a>
+    </div>
+  </section>
+
+  <section class="index">
+    <ol class="name-list">
+      {
+        names.map((entry) => (
+          <li>
+            <a href={`/names/${entry.id}/`}>
+              <span class="entry-name">{entry.data.name}</span>
+              <span class="entry-meta">
+                <GenderMark gender={entry.data.gender} />
+                {entry.data.origin}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</BaseLayout>
+
+<style>
+  .lead {
+    padding-block: var(--space-6) var(--space-5);
+    max-width: var(--content-width);
+  }
+
+  .tagline {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: var(--space-3);
+  }
+
+  .actions {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  .button {
+    display: inline-block;
+    padding: 0.6em 1.2em;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-size: var(--step--1);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .button-quiet {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--border);
+  }
+
+  .index {
+    border-top: 1px solid var(--border);
+    padding-block: var(--space-5);
+  }
+
+  .name-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  }
+
+  .name-list a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    padding: var(--space-3) var(--space-2);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+
+  .entry-name {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    color: var(--ink);
+  }
+
+  .entry-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: var(--step--1);
+    color: var(--ink-muted);
+  }
+</style>

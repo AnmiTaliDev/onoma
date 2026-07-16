@@ -1,0 +1,53 @@
+:root {
+  --paper: #faf6ee;
+  --paper-alt: #f1ead9;
+  --ink: #211d18;
+  --ink-muted: #5c554a;
+  --border: #ddd3be;
+
+  --female: #b1503a; /* muted terracotta */
+  --female-soft: #f2ded6;
+  --male: #2e4b6b; /* ink-blue */
+  --male-soft: #dbe3ea;
+  --unisex: #8a7a2e; /* muted ochre */
+  --unisex-soft: #ece4c6;
+
+  --link: var(--male);
+
+  --font-display: 'Fraunces Variable', ui-serif, Georgia, serif;
+  --font-body: 'Source Sans 3 Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --step--1: 0.8rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.563rem;
+  --step-3: 1.953rem;
+  --step-4: 2.441rem;
+  --step-5: 3.052rem;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  --content-width: 42rem;
+  --page-width: 72rem;
+}
+
+:root[data-theme='dark'] {
+  --paper: #1c1914;
+  --paper-alt: #26221b;
+  --ink: #eee7d8;
+  --ink-muted: #b3a996;
+  --border: #3c362b;
+
+  --female: #d97a5f;
+  --female-soft: #3a251e;
+  --male: #7fa1c9;
+  --male-soft: #1f2c3a;
+  --unisex: #c4ac53;
+  --unisex-soft: #362f18;
+}

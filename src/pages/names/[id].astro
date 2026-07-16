@@ -1,0 +1,165 @@
+---
+import { getCollection, getEntries } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GenderMark from '../../components/GenderMark.astro';
+import { useTranslations } from '../../i18n';
+
+export async function getStaticPaths() {
+  const names = await getCollection('names');
+  return names.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const related = data.related.length ? await getEntries(data.related) : [];
+const t = useTranslations();
+---
+
+<BaseLayout title={data.name} description={`${data.name}: ${data.meaning} (${data.origin}).`}>
+  <article class="entry">
+    <header class="entry-header">
+      <GenderMark gender={data.gender} />
+      <h1>{data.name}</h1>
+      {data.pronunciation && <p class="pronunciation">{data.pronunciation}</p>}
+    </header>
+
+    <div class="entry-body">
+      <div class="prose">
+        <blockquote class="meaning">
+          <p><strong>{t('entry.meaning')}:</strong> {data.meaning}</p>
+          <cite>{t('entry.origin')}: {data.origin}</cite>
+        </blockquote>
+
+        <p>{data.description}</p>
+
+        {
+          data.variants && data.variants.length > 0 && (
+            <p class="variants">
+              <strong>{t('entry.variants')}:</strong> {data.variants.join(', ')}
+            </p>
+          )
+        }
+      </div>
+
+      <aside class="rail">
+        <h2>{t('entry.related')}</h2>
+        {
+          related.length > 0 ? (
+            <ul>
+              {related.map((r) => (
+                <li>
+                  <a href={`/names/${r.id}/`}>
+                    <span>{r.data.name}</span>
+                    <GenderMark gender={r.data.gender} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="none">{t('entry.noRelated')}</p>
+          )
+        }
+      </aside>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .entry-header {
+    padding-block: var(--space-5) var(--space-3);
+  }
+
+  .entry-header h1 {
+    margin: 0.1em 0 0;
+    font-size: var(--step-5);
+  }
+
+  .pronunciation {
+    color: var(--ink-muted);
+    font-style: italic;
+    margin: 0.2em 0 0;
+  }
+
+  .entry-body {
+    display: grid;
+    grid-template-columns: minmax(0, var(--content-width)) minmax(14rem, 18rem);
+    gap: var(--space-6);
+    align-items: start;
+    padding-bottom: var(--space-6);
+  }
+
+  @media (max-width: 60rem) {
+    .entry-body {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .meaning {
+    margin: 0 0 var(--space-4);
+    padding-left: var(--space-3);
+    border-left: 3px solid var(--male);
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-style: italic;
+  }
+
+  .meaning p {
+    margin: 0;
+  }
+
+  .meaning cite {
+    display: block;
+    margin-top: 0.3em;
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    font-style: normal;
+    color: var(--ink-muted);
+  }
+
+  .variants {
+    color: var(--ink-muted);
+    font-size: var(--step--1);
+  }
+
+  .rail {
+    position: sticky;
+    top: var(--space-4);
+    border-left: 1px solid var(--border);
+    padding-left: var(--space-4);
+  }
+
+  .rail h2 {
+    font-size: var(--step-0);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+  }
+
+  .rail ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .rail li {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .rail a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: var(--space-2) 0;
+    text-decoration: none;
+    font-family: var(--font-display);
+  }
+
+  .none {
+    color: var(--ink-muted);
+    font-size: var(--step--1);
+  }
+</style>

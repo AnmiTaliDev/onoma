@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://onoma.anmitali.dev/sitemap-index.xml

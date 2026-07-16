@@ -1,0 +1,38 @@
+---
+import { genderMeta, type Gender } from '../lib/gender';
+import { useTranslations } from '../i18n';
+
+interface Props {
+  gender: Gender;
+}
+
+const { gender } = Astro.props;
+const meta = genderMeta[gender];
+const t = useTranslations();
+---
+
+<span class="gender-mark" style={`--mark-color: ${meta.color}`}>
+  <svg viewBox="0 0 16 16" width="10" height="10" aria-hidden="true" class={`shape-${meta.shape}`}>
+    {meta.shape === 'circle' && <circle cx="8" cy="8" r="7" />}
+    {meta.shape === 'square' && <rect x="1.5" y="1.5" width="13" height="13" />}
+    {meta.shape === 'triangle' && <polygon points="8,1 15,15 1,15" />}
+  </svg>
+  <span>{t(meta.labelKey)}</span>
+</span>
+
+<style>
+  .gender-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: var(--step--1);
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  svg {
+    fill: var(--mark-color);
+    flex-shrink: 0;
+  }
+</style>
