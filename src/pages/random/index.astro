@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n';
+
+const t = useTranslations();
+const entries = await getCollection('names');
+const origins = [...new Set(entries.map((e) => e.data.origin))].sort((a, b) => a.localeCompare(b));
+
+const pickerData = JSON.stringify(
+  entries.map((e) => ({
+    id: e.id,
+    name: e.data.name,
+    gender: e.data.gender,
+    origin: e.data.origin,
+    meaning: e.data.meaning,
+  })),
+);
+---
+
+<BaseLayout title={t('random.title')} description={t('random.lead')}>
+  <h1>{t('random.title')}</h1>
+  <p class="prose lead">{t('random.lead')}</p>
+
+  <div id="picker" class="picker">
+    <div class="filters">
+      <label>
+        {t('random.gender')}
+        <select data-gender>
+          <option value="any">{t('random.any')}</option>
+          <option value="female">{t('gender.female')}</option>
+          <option value="male">{t('gender.male')}</option>
+          <option value="unisex">{t('gender.unisex')}</option>
+        </select>
+      </label>
+
+      <label>
+        {t('random.origin')}
+        <select data-origin>
+          <option value="any">{t('random.any')}</option>
+          {origins.map((origin) => <option value={origin}>{origin}</option>)}
+        </select>
+      </label>
+
+      <button type="button" data-pick class="button">
+        {t('random.pick')}
+      </button>
+    </div>
+
+    <div data-result class="result"></div>
+  </div>
+
+  <script type="application/json" id="picker-data" set:html={pickerData} />
+  <script>
+    import { initRandomPicker } from '../../scripts/random';
+
+    const dataEl = document.getElementById('picker-data');
+    const root = document.getElementById('picker');
+    if (dataEl?.textContent && root) {
+      initRandomPicker(root, JSON.parse(dataEl.textContent));
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  .lead {
+    margin-bottom: var(--space-5);
+  }
+
+  .picker {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-4);
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+
+  .filters label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    font-size: var(--step--1);
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .filters select {
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--border);
+    padding: 0.5em 0.6em;
+    min-width: 12rem;
+  }
+
+  .result:empty {
+    display: none;
+  }
+</style>

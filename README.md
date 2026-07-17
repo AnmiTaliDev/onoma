@@ -25,15 +25,23 @@ Names live as one JSON file per entry in `src/data/names/`, filename = id (e.g. 
      "origin": "Greek",
      "meaning": "torch, bright one",
      "description": "A paragraph or two of prose etymology and cultural context.",
-     "related": ["helena"],
-     "pronunciation": "eh-LEH-nah",
-     "variants": ["Helena", "Elana"]
+     "parent": "helena",
+     "pronunciation": "eh-LEH-nah"
    }
    ```
 
-   Required: `name`, `gender` (`female` | `male` | `unisex`), `origin`, `meaning`, `description`. Optional: `related` (array of other ids — must already exist in the dataset), `pronunciation`, `variants`.
+   Required: `name`, `gender` (`female` | `male` | `unisex`), `origin`, `meaning`, `description`. Optional: `pronunciation`, `variants` (spelling forms of the same name that don't merit their own entry).
 
-2. Run `npm run astro sync` (or `npm run build`) to validate. A bad `gender` value or a `related` id that doesn't exist fails the build rather than shipping silently.
+   Relationships aren't listed by hand. Instead:
+
+   - `parent` — this name is a direct derivation of another entry (a diminutive, or the form in another language descended from it). Must reference an existing id.
+   - `root` — a free-text label for a shared etymological root, for names that come from the same source independently rather than one being derived from the other (e.g. Anna and John both trace to the Hebrew root `ḥ-n-n`).
+
+   A name's "Related names" list is computed at build time (`src/lib/related.ts`) from `parent`/`root`: its parent, its children (other entries whose `parent` points at it), its siblings (same `parent`), and anything sharing its `root`. This is a deliberate choice over a hand-maintained `related` array — with real-world naming that array has to be kept symmetric by hand (add B to A's list _and_ A to B's), and that duplication drifts out of sync as the dataset grows. If a name genuinely is _not_ derived from anything and shares no root with an existing entry, omit both fields; it'll show with no related names until something connects to it.
+
+   Rule of thumb for what counts as a separate entry rather than a `variants` string: if it's pronounced differently, it's a different name (e.g. Alexander → Aleksandr, Alessandro, Iskander, Sasha are each their own entry with `parent: "alexander"`, not a `variants` list on Alexander).
+
+2. Run `npm run astro sync` (or `npm run build`) to validate. A bad `gender` value or a `parent` id that doesn't exist fails the build rather than shipping silently.
 
 ## i18n
 
