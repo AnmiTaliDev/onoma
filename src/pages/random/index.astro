@@ -1,11 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { parseOrigins } from '../../lib/origin';
 import { useTranslations } from '../../i18n';
 
 const t = useTranslations();
 const entries = await getCollection('names');
-const origins = [...new Set(entries.map((e) => e.data.origin))].sort((a, b) => a.localeCompare(b));
+const origins = [...new Set(entries.flatMap((e) => parseOrigins(e.data.origin)))].sort((a, b) =>
+  a.localeCompare(b),
+);
 
 const pickerData = JSON.stringify(
   entries.map((e) => ({

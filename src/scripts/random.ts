@@ -1,3 +1,4 @@
+import { parseOrigins } from '../lib/origin';
 import { renderPickerCard, type PickerEntry } from './picker-card';
 
 export function initRandomPicker(root: HTMLElement, entries: PickerEntry[]) {
@@ -14,7 +15,9 @@ export function initRandomPicker(root: HTMLElement, entries: PickerEntry[]) {
     const origin = originSelect?.value ?? 'any';
 
     const matches = entries.filter(
-      (e) => (gender === 'any' || e.gender === gender) && (origin === 'any' || e.origin === origin),
+      (e) =>
+        (gender === 'any' || e.gender === gender) &&
+        (origin === 'any' || parseOrigins(e.origin).includes(origin)),
     );
 
     if (matches.length === 0) {
