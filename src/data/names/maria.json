@@ -1,9 +1,8 @@
 {
   "name": "Maria",
   "gender": "female",
-  "origin": "Hebrew (via Latin)",
+  "origin": "Latin",
   "meaning": "wished-for child",
-  "description": "Maria descends from the Latin Maria, itself a rendering of the Hebrew Miriam. The root's exact sense is disputed among etymologists — 'wished-for child' and 'bitterness' are the two glosses cited most often — but its cultural weight is not: as the name of the mother of Jesus, it became one of the most widely given female names across Europe, Latin America, and beyond, and produced local forms in nearly every language it touched.",
-  "related": [],
-  "variants": ["Mary", "Marie", "Miriam", "Marija"]
+  "description": "Maria is the Latin and Greek rendering of the Hebrew Miriam. Its cultural weight comes above all from being the name of the mother of Jesus, which made it one of the most widely given female names across Europe, Latin America, and beyond, and produced local forms in nearly every language it touched.",
+  "parent": "miriam"
 }
