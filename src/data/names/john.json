@@ -3,7 +3,6 @@
   "gender": "male",
   "origin": "Hebrew",
   "meaning": "Yahweh is gracious",
-  "description": "John comes from the Hebrew Yohanan, a compound of Yahweh and ḥanan, 'to be gracious' — the same root that gives Hannah and Anna their sense of favor. Two Yohanans in the New Testament, John the Baptist and John the Apostle, carried the name into Greek and Latin, and from there into essentially every European language: Ivan, Sean, Juan, Giovanni, and Jan are all the same name in different clothing.",
-  "related": ["anna"],
-  "variants": ["Ivan", "Sean", "Juan", "Giovanni", "Jan"]
+  "description": "John comes from the Hebrew Yohanan, a compound of Yahweh and ḥanan, 'to be gracious' — the same root that gives Hannah her sense of favor. Two Yohanans in the New Testament, John the Baptist and John the Apostle, carried the name into Greek and Latin, and from there into essentially every European language: Ivan, Sean, Juan, Giovanni, and Jan are all the same name in different clothing.",
+  "root": "ḥ-n-n"
 }
