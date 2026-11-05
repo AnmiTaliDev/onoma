@@ -22,32 +22,40 @@ const pickerData = JSON.stringify(
 ---
 
 <BaseLayout title={t('random.title')} description={t('random.lead')}>
-  <h1>{t('random.title')}</h1>
-  <p class="prose lead">{t('random.lead')}</p>
+  <h1 class="md-typescale-display-medium head">{t('random.title')}</h1>
+  <p class="prose lead md-typescale-body-large">{t('random.lead')}</p>
 
   <div id="picker" class="picker">
     <div class="filters">
-      <label>
-        {t('random.gender')}
-        <select data-gender>
-          <option value="any">{t('random.any')}</option>
-          <option value="female">{t('gender.female')}</option>
-          <option value="male">{t('gender.male')}</option>
-          <option value="unisex">{t('gender.unisex')}</option>
-        </select>
-      </label>
+      <md-outlined-select data-gender label={t('random.gender')}>
+        <md-select-option value="any" selected>
+          <div slot="headline">{t('random.any')}</div>
+        </md-select-option>
+        <md-select-option value="female">
+          <div slot="headline">{t('gender.female')}</div>
+        </md-select-option>
+        <md-select-option value="male">
+          <div slot="headline">{t('gender.male')}</div>
+        </md-select-option>
+        <md-select-option value="unisex">
+          <div slot="headline">{t('gender.unisex')}</div>
+        </md-select-option>
+      </md-outlined-select>
 
-      <label>
-        {t('random.origin')}
-        <select data-origin>
-          <option value="any">{t('random.any')}</option>
-          {origins.map((origin) => <option value={origin}>{origin}</option>)}
-        </select>
-      </label>
+      <md-outlined-select data-origin label={t('random.origin')}>
+        <md-select-option value="any" selected>
+          <div slot="headline">{t('random.any')}</div>
+        </md-select-option>
+        {
+          origins.map((origin) => (
+            <md-select-option value={origin}>
+              <div slot="headline">{origin}</div>
+            </md-select-option>
+          ))
+        }
+      </md-outlined-select>
 
-      <button type="button" data-pick class="button">
-        {t('random.pick')}
-      </button>
+      <md-filled-button data-pick>{t('random.pick')}</md-filled-button>
     </div>
 
     <div data-result class="result"></div>
@@ -66,41 +74,26 @@ const pickerData = JSON.stringify(
 </BaseLayout>
 
 <style>
-  .lead {
-    margin-bottom: var(--space-5);
+  .head {
+    padding-top: var(--space-5);
   }
 
-  .picker {
-    border-top: 1px solid var(--border);
-    padding-top: var(--space-4);
+  .lead {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-4);
+    color: var(--md-sys-color-on-surface-variant);
   }
 
   .filters {
     display: flex;
     flex-wrap: wrap;
-    align-items: end;
-    gap: var(--space-4);
-    margin-bottom: var(--space-5);
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
   }
 
-  .filters label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4em;
-    font-size: var(--step--1);
-    color: var(--ink-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .filters select {
-    font-family: var(--font-body);
-    font-size: var(--step-0);
-    color: var(--ink);
-    background: var(--paper);
-    border: 1px solid var(--border);
-    padding: 0.5em 0.6em;
-    min-width: 12rem;
+  md-outlined-select {
+    min-width: 14rem;
   }
 
   .result:empty {

@@ -11,8 +11,8 @@ const genders = Object.keys(genderMeta) as Array<keyof typeof genderMeta>;
 ---
 
 <BaseLayout title={t('browse.title')} description="Browse every name in Onoma, alphabetically.">
-  <h1>{t('browse.title')}</h1>
-  <p class="count">{t('browse.count', { count: names.length })}</p>
+  <h1 class="md-typescale-display-medium head">{t('browse.title')}</h1>
+  <p class="count md-typescale-body-medium">{t('browse.count', { count: names.length })}</p>
 
   <ul class="legend" aria-label={t('legend.title')}>
     {
@@ -24,69 +24,42 @@ const genders = Object.keys(genderMeta) as Array<keyof typeof genderMeta>;
     }
   </ul>
 
-  <ol class="entries">
+  <md-list class="entries">
     {
       names.map((entry) => (
-        <li>
-          <a href={`/names/${entry.id}/`}>
-            <span class="entry-name">{entry.data.name}</span>
-            <span class="entry-origin">{entry.data.origin}</span>
+        <md-list-item type="link" href={`/names/${entry.id}/`}>
+          <div slot="headline">{entry.data.name}</div>
+          <div slot="supporting-text">{entry.data.origin}</div>
+          <span slot="end">
             <GenderMark gender={entry.data.gender} />
-          </a>
-        </li>
+          </span>
+        </md-list-item>
       ))
     }
-  </ol>
+  </md-list>
 </BaseLayout>
 
 <style>
+  .head {
+    padding-top: var(--space-5);
+  }
+
   .count {
-    color: var(--ink-muted);
-    font-size: var(--step--1);
+    margin-top: var(--space-1);
+    color: var(--md-sys-color-on-surface-variant);
   }
 
   .legend {
     display: flex;
-    gap: var(--space-4);
+    flex-wrap: wrap;
+    gap: var(--space-1);
     list-style: none;
     padding: 0;
-    margin: var(--space-3) 0 var(--space-5);
-    border-block: 1px solid var(--border);
-    padding-block: var(--space-2);
+    margin: var(--space-3) 0;
   }
 
   .entries {
-    list-style: none;
-    margin: 0;
+    --md-list-container-color: transparent;
     padding: 0;
-  }
-
-  .entries li {
-    border-bottom: 1px solid var(--border);
-  }
-
-  .entries a {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    align-items: baseline;
-    gap: var(--space-3);
-    padding: var(--space-2) var(--space-2);
-    margin-inline: calc(var(--space-2) * -1);
-    text-decoration: none;
-  }
-
-  .entries a:hover {
-    background: var(--paper-alt);
-  }
-
-  .entry-name {
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    color: var(--ink);
-  }
-
-  .entry-origin {
-    color: var(--ink-muted);
-    font-size: var(--step--1);
   }
 </style>
