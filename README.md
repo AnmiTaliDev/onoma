@@ -8,8 +8,8 @@ Live at [onoma.anmitali.dev](https://onoma.anmitali.dev).
 
 - [Astro](https://astro.build), static output, deployed on Vercel via `@astrojs/vercel`
 - Content Layer API (`src/content.config.ts`) with a Zod schema — invalid or dangling data fails the build
-- Plain CSS with custom-property design tokens (no Tailwind — see [DESIGN.md](./DESIGN.md))
-- Self-hosted variable fonts via Fontsource, no external font requests at runtime
+- Material Design 3 via [`@material/web`](https://github.com/material-components/material-web) components; the color scheme is generated from a seed color with `@material/material-color-utilities` (`npm run theme` rewrites `src/styles/theme.css`)
+- Self-hosted Roboto via Fontsource, no external font requests at runtime
 - ESLint + Prettier, both Astro-aware (`eslint-plugin-astro`, `prettier-plugin-astro`)
 
 ## Adding a name
@@ -63,6 +63,7 @@ Name _content_ (the entries themselves) isn't localized by this system — that 
 | `npm run dev`     | Start the dev server at `localhost:4321` |
 | `npm run build`   | Build to `./dist/`                       |
 | `npm run preview` | Preview the production build locally     |
+| `npm run theme`   | Regenerate `src/styles/theme.css`        |
 | `npm run lint`    | ESLint + Prettier check                  |
 | `npm run format`  | Prettier write                           |
 
