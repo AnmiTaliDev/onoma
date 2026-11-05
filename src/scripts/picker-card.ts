@@ -21,8 +21,10 @@ const GENDER_LABEL: Record<PickerEntry['gender'], string> = {
 export function renderPickerCard(entry: PickerEntry): string {
   return `
     <a href="/names/${entry.id}/" class="picker-card">
-      <span class="picker-gender">
-        <svg viewBox="0 0 16 16" width="10" height="10" aria-hidden="true" style="fill: var(--${entry.gender})">${SHAPE[entry.gender]}</svg>
+      <md-ripple></md-ripple>
+      <md-elevation></md-elevation>
+      <span class="gender-mark ${entry.gender}">
+        <svg viewBox="0 0 16 16" width="10" height="10" aria-hidden="true">${SHAPE[entry.gender]}</svg>
         <span>${GENDER_LABEL[entry.gender]}</span>
       </span>
       <span class="picker-name">${entry.name}</span>

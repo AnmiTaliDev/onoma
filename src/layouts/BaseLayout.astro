@@ -38,11 +38,25 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
 
     <meta name="generator" content={Astro.generator} />
   </head>
-  <body>
+  <body class="md-typescale-body-large">
     <SiteHeader />
     <main class="container">
       <slot />
     </main>
     <SiteFooter />
+    <script>
+      import '@material/web/button/filled-button.js';
+      import '@material/web/button/filled-tonal-button.js';
+      import '@material/web/button/text-button.js';
+      import '@material/web/divider/divider.js';
+      import '@material/web/elevation/elevation.js';
+      import '@material/web/icon/icon.js';
+      import '@material/web/iconbutton/icon-button.js';
+      import '@material/web/list/list.js';
+      import '@material/web/list/list-item.js';
+      import '@material/web/ripple/ripple.js';
+      import '@material/web/select/outlined-select.js';
+      import '@material/web/select/select-option.js';
+    </script>
   </body>
 </html>
