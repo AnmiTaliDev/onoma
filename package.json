@@ -17,6 +17,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "theme": "node scripts/generate-theme.mjs",
     "astro": "astro",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write ."
@@ -24,12 +25,13 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "@astrojs/vercel": "^11.0.3",
-    "@fontsource-variable/fraunces": "^5.2.9",
-    "@fontsource-variable/source-sans-3": "^5.2.9",
+    "@fontsource-variable/roboto": "^5.3.0",
+    "@material/web": "^2.5.0",
     "astro": "^7.0.9"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@material/material-color-utilities": "^0.4.0",
     "astro-eslint-parser": "^3.0.0",
     "eslint": "^10.7.0",
     "eslint-plugin-astro": "^3.0.1",
