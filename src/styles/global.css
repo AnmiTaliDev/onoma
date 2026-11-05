@@ -26,6 +26,20 @@ body {
   color: var(--md-sys-color-on-surface);
 }
 
+.shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--nav-size);
+}
+
+@media (min-width: 600px) {
+  .shell {
+    padding-bottom: 0;
+    padding-left: var(--nav-size);
+  }
+}
+
 main {
   flex: 1;
   width: 100%;
@@ -84,7 +98,7 @@ a {
   gap: 0.5rem;
   height: 1.5rem;
   padding-inline: 0.75rem;
-  border-radius: var(--shape-full);
+  border-radius: var(--md-sys-shape-corner-full);
   font: var(--md-sys-typescale-label-medium-weight, 500)
     var(--md-sys-typescale-label-medium-size, 0.75rem) /
     var(--md-sys-typescale-label-medium-line-height, 1rem) var(--md-ref-typeface-plain);
@@ -118,7 +132,7 @@ a {
   padding: var(--space-3);
   background: var(--md-sys-color-surface-container-low);
   color: var(--md-sys-color-on-surface);
-  border-radius: var(--shape-medium);
+  border-radius: var(--md-sys-shape-corner-medium);
   text-decoration: none;
   outline: none;
   --md-elevation-level: 1;

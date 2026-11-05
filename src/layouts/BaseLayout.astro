@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
-import SiteHeader from '../components/SiteHeader.astro';
+import AppBar from '../components/AppBar.astro';
+import NavBar from '../components/NavBar.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
 interface Props {
@@ -22,6 +23,13 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
       const stored = localStorage.getItem('theme');
       const dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
       if (dark) document.documentElement.dataset.theme = 'dark';
+      const css = localStorage.getItem('theme-css');
+      if (css) {
+        const style = document.createElement('style');
+        style.id = 'user-theme';
+        style.textContent = css;
+        document.head.append(style);
+      }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -39,15 +47,21 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
     <meta name="generator" content={Astro.generator} />
   </head>
   <body class="md-typescale-body-large">
-    <SiteHeader />
-    <main class="container">
-      <slot />
-    </main>
-    <SiteFooter />
+    <NavBar />
+    <div class="shell">
+      <AppBar />
+      <main class="container">
+        <slot />
+      </main>
+      <SiteFooter />
+    </div>
     <script>
       import '@material/web/button/filled-button.js';
       import '@material/web/button/filled-tonal-button.js';
       import '@material/web/button/text-button.js';
+      import '@material/web/dialog/dialog.js';
+      import '@material/web/chips/assist-chip.js';
+      import '@material/web/chips/chip-set.js';
       import '@material/web/divider/divider.js';
       import '@material/web/elevation/elevation.js';
       import '@material/web/icon/icon.js';

@@ -1,0 +1,59 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import ThemePicker from './ThemePicker.astro';
+import { useTranslations } from '../i18n';
+
+const t = useTranslations();
+---
+
+<header class="app-bar">
+  <div class="row">
+    <a href="/" class="brand md-typescale-title-large">{t('site.title')}</a>
+    <div class="actions">
+      <ThemePicker />
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<script>
+  const bar = document.querySelector('.app-bar');
+  const update = () => bar?.toggleAttribute('data-scrolled', window.scrollY > 0);
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+</script>
+
+<style>
+  .app-bar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--md-sys-color-surface);
+    transition: background-color 200ms var(--md-sys-motion-easing-standard);
+  }
+
+  .app-bar[data-scrolled] {
+    background: var(--md-sys-color-surface-container);
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--page-width);
+    margin-inline: auto;
+    height: 4rem;
+    padding-inline: var(--space-2);
+  }
+
+  .brand {
+    padding-inline: var(--space-1);
+    color: var(--md-sys-color-on-surface);
+    text-decoration: none;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.25rem;
+  }
+</style>
