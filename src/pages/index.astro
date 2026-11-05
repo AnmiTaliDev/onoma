@@ -27,6 +27,7 @@ const pickerData = JSON.stringify(
     <p class="prose md-typescale-body-large">{t('home.lead')}</p>
     <div class="actions">
       <md-filled-button href="/names/">{t('home.browseAll')}</md-filled-button>
+      <md-filled-tonal-button href="/random/">{t('nav.random')}</md-filled-tonal-button>
     </div>
   </section>
 
@@ -59,7 +60,28 @@ const pickerData = JSON.stringify(
   }
 
   .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
     margin-top: var(--space-4);
+  }
+
+  .name-of-day :global(.picker-card) {
+    padding: var(--space-4);
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    background: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    --md-elevation-level: 0;
+  }
+
+  .name-of-day :global(.picker-name) {
+    font-size: 3.5625rem;
+    line-height: 4rem;
+  }
+
+  .name-of-day :global(.picker-origin) {
+    color: inherit;
+    opacity: 0.8;
   }
 
   .name-of-day {
