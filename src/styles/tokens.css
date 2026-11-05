@@ -1,29 +1,19 @@
 :root {
-  --paper: #faf6ee;
-  --paper-alt: #f1ead9;
-  --ink: #211d18;
-  --ink-muted: #5c554a;
-  --border: #ddd3be;
+  --md-ref-typeface-brand: 'Roboto Variable', Roboto, ui-sans-serif, system-ui, sans-serif;
+  --md-ref-typeface-plain: 'Roboto Variable', Roboto, ui-sans-serif, system-ui, sans-serif;
 
-  --female: #b1503a; /* muted terracotta */
-  --female-soft: #f2ded6;
-  --male: #2e4b6b; /* ink-blue */
-  --male-soft: #dbe3ea;
-  --unisex: #8a7a2e; /* muted ochre */
-  --unisex-soft: #ece4c6;
+  --md-sys-shape-corner-extra-small: 4px;
+  --md-sys-shape-corner-small: 8px;
+  --md-sys-shape-corner-medium: 12px;
+  --md-sys-shape-corner-large: 16px;
+  --md-sys-shape-corner-extra-large: 28px;
+  --md-sys-shape-corner-full: 9999px;
 
-  --link: var(--male);
+  --md-sys-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
 
-  --font-display: 'Fraunces Variable', ui-serif, Georgia, serif;
-  --font-body: 'Source Sans 3 Variable', ui-sans-serif, system-ui, sans-serif;
-
-  --step--1: 0.8rem;
-  --step-0: 1rem;
-  --step-1: 1.25rem;
-  --step-2: 1.563rem;
-  --step-3: 1.953rem;
-  --step-4: 2.441rem;
-  --step-5: 3.052rem;
+  --md-sys-state-hover-opacity: 0.08;
+  --md-sys-state-pressed-opacity: 0.1;
 
   --space-1: 0.5rem;
   --space-2: 1rem;
@@ -31,23 +21,8 @@
   --space-4: 2rem;
   --space-5: 3rem;
   --space-6: 4rem;
-  --space-7: 6rem;
 
+  --nav-size: 5rem;
   --content-width: 42rem;
-  --page-width: 72rem;
-}
-
-:root[data-theme='dark'] {
-  --paper: #1c1914;
-  --paper-alt: #26221b;
-  --ink: #eee7d8;
-  --ink-muted: #b3a996;
-  --border: #3c362b;
-
-  --female: #d97a5f;
-  --female-soft: #3a251e;
-  --male: #7fa1c9;
-  --male-soft: #1f2c3a;
-  --unisex: #c4ac53;
-  --unisex-soft: #362f18;
+  --page-width: 65rem;
 }

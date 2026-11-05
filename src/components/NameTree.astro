@@ -1,0 +1,108 @@
+---
+import type { TreeNode } from '../lib/families';
+import NameTree from './NameTree.astro';
+
+interface Props {
+  nodes: TreeNode[];
+}
+
+const { nodes } = Astro.props;
+---
+
+<ul class="tree">
+  {
+    nodes.map((node) => (
+      <li>
+        <a class={`node ${node.entry.data.gender}`} href={`/names/${node.entry.id}/`}>
+          <md-ripple />
+          <span class="node-name">{node.entry.data.name}</span>
+          <span class="node-origin">{node.entry.data.origin}</span>
+        </a>
+        {node.children.length > 0 && <NameTree nodes={node.children} />}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .tree {
+    --gap: 1.25rem;
+    --line: 2px solid var(--md-sys-color-outline-variant);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tree .tree {
+    margin-left: var(--gap);
+    padding-left: var(--gap);
+  }
+
+  li {
+    position: relative;
+    padding-block: 0.25rem;
+  }
+
+  .tree .tree > li::before {
+    content: '';
+    position: absolute;
+    left: calc(var(--gap) * -1);
+    top: 0;
+    bottom: 0;
+    border-left: var(--line);
+  }
+
+  .tree .tree > li:last-child::before {
+    bottom: auto;
+    height: 1.75rem;
+  }
+
+  .tree .tree > li::after {
+    content: '';
+    position: absolute;
+    left: calc(var(--gap) * -1);
+    top: 1.75rem;
+    width: var(--gap);
+    border-top: var(--line);
+  }
+
+  .node {
+    display: inline-flex;
+    flex-direction: column;
+    padding: 0.375rem 0.875rem;
+    position: relative;
+    border-radius: var(--md-sys-shape-corner-medium);
+    text-decoration: none;
+    --md-ripple-hover-color: currentColor;
+    --md-ripple-pressed-color: currentColor;
+  }
+
+  .node:focus-visible {
+    outline: 3px solid var(--md-sys-color-secondary);
+    outline-offset: 2px;
+  }
+
+  .node-name {
+    font: 500 1rem / 1.5rem var(--md-ref-typeface-plain);
+  }
+
+  .node-origin {
+    font: 400 0.75rem / 1rem var(--md-ref-typeface-plain);
+    opacity: 0.8;
+  }
+
+  .female {
+    background: var(--gender-female-container);
+    color: var(--gender-on-female-container);
+  }
+
+  .male {
+    background: var(--gender-male-container);
+    color: var(--gender-on-male-container);
+  }
+
+  .unisex {
+    background: var(--gender-unisex-container);
+    color: var(--gender-on-unisex-container);
+  }
+</style>

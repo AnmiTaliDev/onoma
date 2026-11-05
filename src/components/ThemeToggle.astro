@@ -1,13 +1,14 @@
 ---
+import Icon from './Icon.astro';
 import { useTranslations } from '../i18n';
 
 const t = useTranslations();
 ---
 
-<button id="theme-toggle" type="button" aria-label={t('nav.themeToggle')}>
-  <span data-state="light">{t('nav.themeDark')}</span>
-  <span data-state="dark">{t('nav.themeLight')}</span>
-</button>
+<md-icon-button id="theme-toggle" aria-label={t('nav.themeToggle')}>
+  <md-icon data-state="light"><Icon name="dark_mode" /></md-icon>
+  <md-icon data-state="dark"><Icon name="light_mode" /></md-icon>
+</md-icon-button>
 
 <script is:inline>
   document.getElementById('theme-toggle')?.addEventListener('click', () => {
@@ -24,23 +25,6 @@ const t = useTranslations();
 </script>
 
 <style>
-  button {
-    background: none;
-    border: none;
-    padding: 0;
-    font-family: inherit;
-    color: var(--ink-muted);
-    text-decoration: none;
-    font-size: var(--step--1);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    cursor: pointer;
-  }
-
-  button:hover {
-    color: var(--ink);
-  }
-
   [data-state='dark'] {
     display: none;
   }
@@ -50,6 +34,6 @@ const t = useTranslations();
   }
 
   :global([data-theme='dark']) [data-state='dark'] {
-    display: inline;
+    display: inline-flex;
   }
 </style>

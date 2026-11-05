@@ -1,0 +1,125 @@
+---
+import Icon from './Icon.astro';
+import { useTranslations } from '../i18n';
+
+const t = useTranslations();
+const seeds = [
+  '#6750A4',
+  '#B3261E',
+  '#C2185B',
+  '#E65100',
+  '#8A7A00',
+  '#2E7D32',
+  '#00796B',
+  '#1565C0',
+];
+---
+
+<md-icon-button id="theme-open" aria-label={t('theme.title')}>
+  <md-icon><Icon name="palette" /></md-icon>
+</md-icon-button>
+
+<md-dialog id="theme-dialog">
+  <div slot="headline">{t('theme.title')}</div>
+  <form slot="content" id="theme-form" method="dialog">
+    <p class="md-typescale-body-medium lead">{t('theme.lead')}</p>
+    <div class="swatches">
+      {
+        seeds.map((seed) => (
+          <button
+            type="button"
+            class="swatch"
+            data-seed={seed}
+            style={`background: ${seed}`}
+            aria-label={seed}
+          />
+        ))
+      }
+      <label class="swatch custom" aria-label={t('theme.custom')}>
+        <input type="color" id="theme-custom" value="#6750a4" />
+      </label>
+    </div>
+  </form>
+  <div slot="actions">
+    <md-text-button id="theme-reset" type="button">{t('theme.reset')}</md-text-button>
+    <md-text-button form="theme-form" value="close">{t('theme.done')}</md-text-button>
+  </div>
+</md-dialog>
+
+<script>
+  import { themeCss, DEFAULT_SEED } from '../lib/theme.js';
+
+  const dialog = document.getElementById('theme-dialog') as HTMLElement & { show(): void };
+  const custom = document.getElementById('theme-custom') as HTMLInputElement;
+
+  function applySeed(seed: string) {
+    const css = themeCss(seed, 'html:root');
+    let style = document.getElementById('user-theme');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'user-theme';
+      document.head.append(style);
+    }
+    style.textContent = css;
+    localStorage.setItem('theme-css', css);
+    localStorage.setItem('theme-seed', seed);
+    custom.value = seed.toLowerCase();
+  }
+
+  document.getElementById('theme-open')?.addEventListener('click', () => dialog.show());
+
+  document.querySelectorAll<HTMLElement>('.swatch[data-seed]').forEach((button) => {
+    button.addEventListener('click', () => applySeed(button.dataset.seed ?? DEFAULT_SEED));
+  });
+
+  custom.addEventListener('input', () => applySeed(custom.value));
+
+  document.getElementById('theme-reset')?.addEventListener('click', () => {
+    document.getElementById('user-theme')?.remove();
+    localStorage.removeItem('theme-css');
+    localStorage.removeItem('theme-seed');
+    custom.value = DEFAULT_SEED.toLowerCase();
+  });
+</script>
+
+<style>
+  .lead {
+    margin: 0 0 var(--space-2);
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 3rem);
+    gap: var(--space-1);
+  }
+
+  .swatch {
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border: 0;
+    border-radius: var(--md-sys-shape-corner-full);
+    cursor: pointer;
+  }
+
+  .swatch:focus-visible {
+    outline: 3px solid var(--md-sys-color-secondary);
+    outline-offset: 2px;
+  }
+
+  .custom {
+    position: relative;
+    overflow: hidden;
+    background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+  }
+
+  .custom input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+</style>

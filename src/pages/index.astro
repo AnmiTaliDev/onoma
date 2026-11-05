@@ -22,16 +22,17 @@ const pickerData = JSON.stringify(
   description="Onoma is a reference for given names: their origins, meanings, and the etymological and cultural threads that connect them."
 >
   <section class="lead">
-    <h1>{t('site.title')}</h1>
-    <p class="tagline">{t('site.tagline')}</p>
-    <p class="prose">{t('home.lead')}</p>
+    <h1 class="md-typescale-display-large">{t('site.title')}</h1>
+    <p class="tagline md-typescale-headline-small">{t('site.tagline')}</p>
+    <p class="prose md-typescale-body-large">{t('home.lead')}</p>
     <div class="actions">
-      <a href="/names/" class="button">{t('home.browseAll')}</a>
+      <md-filled-button href="/names/">{t('home.browseAll')}</md-filled-button>
+      <md-filled-tonal-button href="/random/">{t('nav.random')}</md-filled-tonal-button>
     </div>
   </section>
 
   <section class="name-of-day">
-    <h2>{t('home.nameOfDay')}</h2>
+    <h2 class="md-typescale-title-medium">{t('home.nameOfDay')}</h2>
     <div id="name-of-day"></div>
   </section>
 
@@ -54,29 +55,41 @@ const pickerData = JSON.stringify(
   }
 
   .tagline {
-    font-family: var(--font-display);
-    font-size: var(--step-2);
-    color: var(--ink-muted);
-    font-style: italic;
+    color: var(--md-sys-color-on-surface-variant);
     margin-bottom: var(--space-3);
   }
 
   .actions {
     display: flex;
-    gap: var(--space-3);
+    flex-wrap: wrap;
+    gap: var(--space-1);
     margin-top: var(--space-4);
   }
 
+  .name-of-day :global(.picker-card) {
+    padding: var(--space-4);
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    background: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    --md-elevation-level: 0;
+  }
+
+  .name-of-day :global(.picker-name) {
+    font-size: 3.5625rem;
+    line-height: 4rem;
+  }
+
+  .name-of-day :global(.picker-origin) {
+    color: inherit;
+    opacity: 0.8;
+  }
+
   .name-of-day {
-    border-top: 1px solid var(--border);
-    padding-block: var(--space-5);
+    padding-bottom: var(--space-5);
   }
 
   .name-of-day h2 {
-    font-size: var(--step-0);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--ink-muted);
-    margin-bottom: var(--space-3);
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: var(--space-2);
   }
 </style>

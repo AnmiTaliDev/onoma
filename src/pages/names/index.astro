@@ -2,17 +2,20 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GenderMark from '../../components/GenderMark.astro';
+import NameTree from '../../components/NameTree.astro';
 import { genderMeta } from '../../lib/gender';
+import { buildFamilies } from '../../lib/families';
 import { useTranslations } from '../../i18n';
 
 const t = useTranslations();
-const names = (await getCollection('names')).sort((a, b) => a.data.name.localeCompare(b.data.name));
+const names = await getCollection('names');
+const { families, standalone } = buildFamilies(names);
 const genders = Object.keys(genderMeta) as Array<keyof typeof genderMeta>;
 ---
 
-<BaseLayout title={t('browse.title')} description="Browse every name in Onoma, alphabetically.">
-  <h1>{t('browse.title')}</h1>
-  <p class="count">{t('browse.count', { count: names.length })}</p>
+<BaseLayout title={t('browse.title')} description="Browse every name in Onoma, grouped by family.">
+  <h1 class="md-typescale-display-medium head">{t('browse.title')}</h1>
+  <p class="count md-typescale-body-medium">{t('browse.count', { count: names.length })}</p>
 
   <ul class="legend" aria-label={t('legend.title')}>
     {
@@ -24,69 +27,118 @@ const genders = Object.keys(genderMeta) as Array<keyof typeof genderMeta>;
     }
   </ul>
 
-  <ol class="entries">
-    {
-      names.map((entry) => (
-        <li>
-          <a href={`/names/${entry.id}/`}>
-            <span class="entry-name">{entry.data.name}</span>
-            <span class="entry-origin">{entry.data.origin}</span>
-            <GenderMark gender={entry.data.gender} />
-          </a>
-        </li>
-      ))
-    }
-  </ol>
+  <section>
+    <h2 class="md-typescale-headline-small">{t('browse.families')}</h2>
+    <p class="lead md-typescale-body-medium">{t('browse.familiesLead')}</p>
+    <div class="families">
+      {
+        families.map((family) => (
+          <article class="family">
+            {family.roots.length > 0 && (
+              <p class="roots md-typescale-label-medium">{family.roots.join(' · ')}</p>
+            )}
+            <NameTree nodes={family.trees} />
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="standalone">
+    <h2 class="md-typescale-headline-small">{t('browse.standalone')}</h2>
+    <p class="lead md-typescale-body-medium">{t('browse.standaloneLead')}</p>
+    <ul class="chips">
+      {
+        standalone.map((entry) => (
+          <li>
+            <md-assist-chip
+              class={entry.data.gender}
+              label={entry.data.name}
+              href={`/names/${entry.id}/`}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 </BaseLayout>
 
 <style>
+  .head {
+    padding-top: var(--space-5);
+  }
+
   .count {
-    color: var(--ink-muted);
-    font-size: var(--step--1);
+    margin-top: var(--space-1);
+    color: var(--md-sys-color-on-surface-variant);
   }
 
   .legend {
     display: flex;
-    gap: var(--space-4);
+    flex-wrap: wrap;
+    gap: var(--space-1);
     list-style: none;
     padding: 0;
     margin: var(--space-3) 0 var(--space-5);
-    border-block: 1px solid var(--border);
-    padding-block: var(--space-2);
   }
 
-  .entries {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  section + section {
+    margin-top: var(--space-6);
   }
 
-  .entries li {
-    border-bottom: 1px solid var(--border);
+  .lead {
+    margin-top: 0.25rem;
+    color: var(--md-sys-color-on-surface-variant);
   }
 
-  .entries a {
+  .families {
     display: grid;
-    grid-template-columns: 1fr auto auto;
-    align-items: baseline;
-    gap: var(--space-3);
-    padding: var(--space-2) var(--space-2);
-    margin-inline: calc(var(--space-2) * -1);
-    text-decoration: none;
+    grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    align-items: start;
   }
 
-  .entries a:hover {
-    background: var(--paper-alt);
+  .family {
+    padding: var(--space-2) var(--space-3) var(--space-2);
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    background: var(--md-sys-color-surface-container-low);
+    overflow-x: auto;
   }
 
-  .entry-name {
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    color: var(--ink);
+  .roots {
+    margin-bottom: var(--space-1);
+    color: var(--md-sys-color-on-surface-variant);
   }
 
-  .entry-origin {
-    color: var(--ink-muted);
-    font-size: var(--step--1);
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-3) 0 0;
+  }
+
+  md-assist-chip {
+    --md-assist-chip-container-shape: var(--md-sys-shape-corner-small);
+  }
+
+  .female {
+    --md-assist-chip-container-color: var(--gender-female-container);
+    --md-assist-chip-label-text-color: var(--gender-on-female-container);
+    --md-assist-chip-outline-color: transparent;
+  }
+
+  .male {
+    --md-assist-chip-container-color: var(--gender-male-container);
+    --md-assist-chip-label-text-color: var(--gender-on-male-container);
+    --md-assist-chip-outline-color: transparent;
+  }
+
+  .unisex {
+    --md-assist-chip-container-color: var(--gender-unisex-container);
+    --md-assist-chip-label-text-color: var(--gender-on-unisex-container);
+    --md-assist-chip-outline-color: transparent;
   }
 </style>
