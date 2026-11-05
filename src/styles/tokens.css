@@ -2,6 +2,19 @@
   --md-ref-typeface-brand: 'Roboto Variable', Roboto, ui-sans-serif, system-ui, sans-serif;
   --md-ref-typeface-plain: 'Roboto Variable', Roboto, ui-sans-serif, system-ui, sans-serif;
 
+  --md-sys-shape-corner-extra-small: 4px;
+  --md-sys-shape-corner-small: 8px;
+  --md-sys-shape-corner-medium: 12px;
+  --md-sys-shape-corner-large: 16px;
+  --md-sys-shape-corner-extra-large: 28px;
+  --md-sys-shape-corner-full: 9999px;
+
+  --md-sys-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  --md-sys-state-hover-opacity: 0.08;
+  --md-sys-state-pressed-opacity: 0.1;
+
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
@@ -9,11 +22,7 @@
   --space-5: 3rem;
   --space-6: 4rem;
 
-  --shape-medium: 0.75rem;
-  --shape-large: 1rem;
-  --shape-extra-large: 1.75rem;
-  --shape-full: 62.5rem;
-
+  --nav-size: 5rem;
   --content-width: 42rem;
-  --page-width: 72rem;
+  --page-width: 65rem;
 }
