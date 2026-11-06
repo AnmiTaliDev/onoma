@@ -36,18 +36,6 @@
   --md-sys-color-surface-tint: #65558f;
   --md-sys-color-shadow: #000000;
   --md-sys-color-scrim: #000000;
-  --gender-female: #b4047e;
-  --gender-on-female: #ffffff;
-  --gender-female-container: #ffd8e8;
-  --gender-on-female-container: #3c0028;
-  --gender-male: #3f56ba;
-  --gender-on-male: #ffffff;
-  --gender-male-container: #dde1ff;
-  --gender-on-male-container: #001257;
-  --gender-unisex: #785a00;
-  --gender-on-unisex: #ffffff;
-  --gender-unisex-container: #ffdf9c;
-  --gender-on-unisex-container: #251a00;
 }
 
 :root[data-theme='dark'] {
@@ -88,16 +76,4 @@
   --md-sys-color-surface-tint: #cfbdfe;
   --md-sys-color-shadow: #000000;
   --md-sys-color-scrim: #000000;
-  --gender-female: #ffafd6;
-  --gender-on-female: #620043;
-  --gender-female-container: #8a0060;
-  --gender-on-female-container: #ffd8e8;
-  --gender-male: #b9c3ff;
-  --gender-on-male: #00228a;
-  --gender-male-container: #243ca1;
-  --gender-on-male-container: #dde1ff;
-  --gender-unisex: #f1c048;
-  --gender-on-unisex: #3f2e00;
-  --gender-unisex-container: #5b4300;
-  --gender-on-unisex-container: #ffdf9c;
 }
