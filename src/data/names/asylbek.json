@@ -1,0 +1,9 @@
+{
+  "name": "Asylbek",
+  "gender": "male",
+  "origin": "Kazakh",
+  "meaning": "noble lord",
+  "description": "Asylbek combines the Kazakh asyl 'noble' and bek 'lord'.",
+  "parent": "asyl",
+  "root": "bek"
+}
