@@ -1,7 +1,9 @@
 {
   "name": "Aldiyar",
   "gender": "male",
-  "origin": "Kazakh",
-  "meaning": "uncertain",
-  "description": "Aldiyar is a Kazakh given name that popular sources describe as of Arabic origin. No agreed etymology was found. It has been among the five most-given boys' names in Kazakhstan."
+  "origin": "Arabic/Persian",
+  "meaning": "friend of God, helper of God",
+  "description": "Aldiyar combines the Arabic Allah, 'God, the Most High', and the Persian yar, 'friend, companion, helper, ally or patron'. It has been among the five most-given boys' names in Kazakhstan.",
+  "parent": "yar",
+  "root": "Allāh + yār"
 }
